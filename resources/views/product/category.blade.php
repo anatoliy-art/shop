@@ -1,0 +1,235 @@
+@extends('layouts.app')
+
+@section('title', 'Home')
+
+@section('content')
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <nav class="breadcrumbs">
+                <ul>
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><span>{{ $category->title }}</span></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-md-4">
+            <div class="sidebar">
+
+                <button class="btn btn-warning w-100 text-start collapse-filters-btn mb-3" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <i class="fa-solid fa-filter"></i> Filters
+                </button>
+
+                <div class="collapse collapse-filters" id="collapseFilters">
+                    <div class="filter-block">
+                        <h5 class="section-title"><span>Filter by color</span></h5>
+                        <form action="">
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="black">
+                                    <label class="form-check-label" for="black">
+                                        Black
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">100</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="white">
+                                    <label class="form-check-label" for="white">
+                                        White
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">87</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="red">
+                                    <label class="form-check-label" for="red">
+                                        Red
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">50</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="blue">
+                                    <label class="form-check-label" for="blue">
+                                        Blue
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">115</span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="filter-block">
+                        <h5 class="section-title">
+                            <span>Filter by size</span>
+                        </h5>
+
+                        <form action="">
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="xs">
+                                    <label class="form-check-label" for="xs">
+                                        XS
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">44</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="s">
+                                    <label class="form-check-label" for="s">
+                                        S
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">105</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="m">
+                                    <label class="form-check-label" for="m">
+                                        M
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">35</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="l">
+                                    <label class="form-check-label" for="l">
+                                        L
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">57</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="xl">
+                                    <label class="form-check-label" for="xl">
+                                        XL
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">12</span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="filter-block">
+                        <h5 class="section-title">
+                            <span>Filter by type</span>
+                        </h5>
+
+                        <form action="">
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="man">
+                                    <label class="form-check-label" for="man">
+                                        Man
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">44</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="woman">
+                                    <label class="form-check-label" for="woman">
+                                        Woman
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">105</span>
+                            </div>
+                            <div class="form-check d-flex justify-content-between">
+                                <div>
+                                    <input class="form-check-input" type="checkbox" value="" id="baby">
+                                    <label class="form-check-label" for="baby">
+                                        Baby
+                                    </label>
+                                </div>
+                                <span class="badge border rounded-0">35</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-8">
+            
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h1 class="section-title h3"><span>{{ $category->title }} ({{ count($category->products) }})</span></h1>
+                </div>
+                @if($category->description && $category->thumbnail)
+                <div class="col-4 col-sm-2">
+                    <img src="{{ $category->thumbnail ? asset('uploads/' . $category->thumbnail) : asset('no-image.jpg') }}" alt="" class="img-thumbnail">
+                </div>
+                <div class="col-8 col-sm-10">
+                    <p>{{ $category->description }}</p>
+                </div>
+                @endif
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Sort By:</span>
+                        <select class="form-select" aria-label="Sort by:">
+                            <option selected>Default</option>
+                            <option value="1">Name (a-z)</option>
+                            <option value="2">Name (z-a)</option>
+                            <option value="3">Price (low &gt; high)</option>
+                            <option value="4">Price (high &gt; low)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Show:</span>
+                        <select class="form-select" aria-label="Show:">
+                            <option selected>9</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+	            @foreach($products as $product)
+
+	            <div class="col-lg-4 col-sm-6 mb-3">
+	                <x-product-card :product="$product" />
+	            </div>
+
+	            @endforeach
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                	
+                	{{ $products->links(data:['scrollTo' => false]) }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@endsection
