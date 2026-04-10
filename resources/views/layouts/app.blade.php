@@ -232,6 +232,8 @@
                               <th scope="col">#</th>
                               <th scope="col">Фото</th>
                               <th scope="col">Название</th>
+                              <th scope="col">Color</th>
+                              <th scope="col">Size</th>
                               <th scope="col">Цена</th>
                               <th scope="col">Кол-во</th>
                               <th scope="col">Сумма</th>
@@ -245,8 +247,10 @@
                                 <td class="product-img-td"><a href="{{ route('product.show', $key) }}"><img src="{{ $value['thumbnail'] ? asset('uploads/' . $value['thumbnail']) : asset('no-image.jpg') }}" alt=""></a>
                                 </td>
                                 <td><a href="{{ route('product.show', $key) }}">{{ $value['title'] }}</a></td>
+                                <td>{{ $value['color'] }}</td>
+                                <td>{{ $value['size'] }}</td>                                
                                 <td>$ {{ $value['price'] }}</td>
-                                <td>&times;{{ $value['quantity'] }}</td>
+                                <td>{{ $value['quantity'] }}</td>
                                 <td>$ {{ $value['summ'] }}</td>
                                 <td class="text-end"><a href="{{ route('cart.delete', $key) }}" class="btn btn-danger"><i class="fa-regular fa-circle-xmark"></i></a>
                                 </td>
@@ -255,11 +259,11 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" class="text-end">Total Summ:</td>
+                                <td colspan="8" class="text-end">Total Summ:</td>
                                 <td class="text-end">$ {{ session()->get('totalSumm') }}</td>
                             </tr>
                             <tr>
-                                <td colspan="6" class="text-end">Total Qty:</td>
+                                <td colspan="8" class="text-end">Total Qty:</td>
                                 <td class="text-end">шт {{ session()->get('totalQty') }}</td>
                             </tr>
                         </tfoot>
@@ -298,7 +302,7 @@
 
     @if (session()->has('success'))
         <div class="alert alert-success alert-dismissible fade show my-3 mx-3" role="alert">
-          {{ session('success') }}
+          {!! session('success') !!}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -375,5 +379,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@
                             <i class="fa-solid fa-star"></i>
                         @endif
                     @endfor
-                    <span class="count-reviews">10 reviews</span> |<span class="count-reviews">{{ $product->view }} views</span>
+                    <span class="count-reviews">{{ count($comments) }} reviews</span> |<span class="count-reviews">{{ $product->view }} views</span>
                 </div>
 
                 <div class="product-price">
@@ -76,26 +76,42 @@
 
                 <p>{{ $product->description }}</p>
 
-                <div class="product-add2cart d-flex justify-content-between">
+                <div class="product-add2cart">
                     <div class="input-group">
-                        <form action="{{ route('cart.add.show', $product) }}" method="post" class="d-flex">
+                        <form action="{{ route('cart.add.show', $product) }}" method="post">
 
                             @csrf
 
                             <input type="number" class="form-control" value="1" min="1" name="qty">
                             <button type="submit" class="btn btn-warning" style="width: 250px;"><i class="fas fa-shopping-cart"></i> Add to
                             cart</button>
-                        </form>
-                    </div>
+
                     @if($product->colors || $product->sizes)
-                    <div class="options">
+                    <div class="options mt-3">
                         @if($product->colors)
-                        
+                          <div class="form-group" style="width: 200px;">
+                            <label for="colors" class="form-label">{{ __('Colors') }}</label>
+                            <select class="form-control" name="color">
+                            @foreach($product->colors as $color)
+                              <option value="{{ $color }}">{{ $color }}</option>
+                            @endforeach
+                            </select>
+                          </div>                        
                         @endif
                         @if($product->sizes)
+                          <div class="form-group" style="width: 200px;">
+                            <label for="sizes" class="form-label">{{ __('Sizes') }}</label>
+                            <select class="form-control" name="size">
+                            @foreach($product->sizes as $size)
+                              <option value="{{ $size }}">{{ $size }}</option>
+                            @endforeach
+                            </select>
+                          </div>
                         @endif
                     </div>
                     @endif
+                        </form>
+                    </div>
                 </div>
 
                 <div class="row mt-3">
@@ -153,11 +169,13 @@
                             data-bs-target="#description-tab-pane" type="button" role="tab"
                             aria-controls="description-tab-pane" aria-selected="true">Description</button>
                     </li>
+                    @if(!empty($product->colors) || !empty($product->sizes))
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="features-tab" data-bs-toggle="tab"
                             data-bs-target="#features-tab-pane" type="button" role="tab"
                             aria-controls="features-tab-pane" aria-selected="false">Features</button>
                     </li>
+                    @endif
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
                             data-bs-target="#reviews-tab-pane" type="button" role="tab"
@@ -187,14 +205,18 @@
                         aria-labelledby="features-tab" tabindex="0">
                         <table class="table">
                             <tbody>
+                                @if(!empty($product->colors))
                                 <tr>
                                     <th scope="row">Colors</th>
-                                    <td>white, black, pink</td>
+                                    <td>{{ implode(', ', $product->colors) }}</td>
                                 </tr>
+                                @endif
+                                @if(!empty($product->sizes))
                                 <tr>
                                     <th scope="row">Sizes</th>
-                                    <td>S, M, L</td>
+                                    <td>{{ implode(', ', $product->sizes) }}</td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

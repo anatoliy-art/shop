@@ -118,6 +118,11 @@
       </div>
   @endif
 
+  <div class="form-group md-3 mr-3" style="width: 200px;">
+    <label for="stars" class="form-label">{{ __('Stars') }}</label>
+    <input type="number" class="form-control" value="{{ $product->stars }}" min="0" max="5" name="stars">
+  </div>
+
 </div>
 
   <a href="{{ route('admin.products.show', $product) }}" class="btn btn-primary">{{ __('Go back') }}</a> 

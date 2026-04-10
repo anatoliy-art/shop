@@ -59,6 +59,9 @@ class Product extends Model
         'gallery' => 'array',
         'colors' => 'array',
         'sizes' => 'array',
+        'hit' => 'boolean',
+        'new' => 'boolean',
+        'sale' => 'boolean',
     ];
 
 }

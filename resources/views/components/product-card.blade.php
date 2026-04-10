@@ -30,7 +30,7 @@
                 @endif
             </div>
             <div class="product-links">
-                <a href="{{ route('cart.add', $product) }}" class="btn btn-outline-secondary add-to-cart"><i
+                <a href="{{ route('cart.add', $product) }}" class="btn btn-outline-secondary add-to-cart" data-product="{{ $product->title }}"><i
                         class="fas fa-shopping-cart"></i></a>
             </div>
         </div>

@@ -76,7 +76,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
-
+        
         $data['hit'] = $request->has('hit') == 1;
         $data['new'] = $request->has('new') == 1;
         $data['sale'] = $request->has('sale') == 1;

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('qty_item');
             $table->decimal('summ_item', 10, 2);
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
         });
     }

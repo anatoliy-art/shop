@@ -29,6 +29,8 @@ class CartController extends Controller
             $cart[$product->id] = [
                 "thumbnail" => $product->thumbnail,
                 "title" => $product->title,
+                "color" => '-',
+                "size" => '-',
                 "quantity" => 1,
                 "price" => $product->price,
                 "summ" => $product->price,
@@ -50,44 +52,81 @@ class CartController extends Controller
             
         session()->put('cart', $cart);
 
-        return redirect()->back()->with('success', 'Is Product ' .$product->title. ' success add to cart!');
+        return redirect()->back()->with('success', 'Is Product <b>"' .$product->title. '"</b> success add to cart!');
 
     }
 
     public function addCartShow(Request $request, Product $product)
     {
         $validate = $request->validate([
-            'qty' => 'required|min:1'
+            'qty' => 'required|min:1',
+            'color' => 'nullable',
+            'size' => 'nullable',
         ]);
-
-        if($product->colors || $product->sizes){
-            return redirect()->back()->with('error', 'Is Product esty options!');
-        }
     
         $cart = session()->get('cart', []);
-        
-        if(isset($cart[$product->id])) {
-            $cart[$product->id]['quantity'] += $validate['qty']; // Увеличиваем, если есть
+
+        if(isset($cart[$product->id]) && is_null($product->colors) && is_null($product->sizes)) {
+            $cart[$product->id]['quantity'] += $validate['qty'];
             $cart[$product->id]['summ'] += $product->price * $validate['qty'];
+            
         } else {
             $cart[$product->id] = [
                 "thumbnail" => $product->thumbnail,
                 "title" => $product->title,
+                "color" => $validate['color'] ?? '-',
+                "size" => $validate['size'] ?? '-',
                 "quantity" => $validate['qty'],
                 "price" => $product->price,
                 "summ" => $product->price * $validate['qty'],
-            ];
+            ];            
         }
+
+/*        if(isset($cart[$product->id])) {
+            if(is_null($product->colors) && is_null($product->sizes)){
+                $cart[$product->id]['quantity'] += $validate['qty'];
+                $cart[$product->id]['summ'] += $product->price * $validate['qty'];
+            }else{
+                $cart[$product->id] = [
+                    "thumbnail" => $product->thumbnail,
+                    "title" => $product->title,
+                    "color" => $validate['color'] ?? '-',
+                    "size" => $validate['size'] ?? '-',
+                    "quantity" => $validate['qty'],
+                    "price" => $product->price,
+                    "summ" => $product->price * $validate['qty'],
+                ];                
+            }
+            
+        } else {
+            $cart[$product->id] = [
+                "thumbnail" => $product->thumbnail,
+                "title" => $product->title,
+                "color" => $validate['color'] ?? '-',
+                "size" => $validate['size'] ?? '-',
+                "quantity" => $validate['qty'],
+                "price" => $product->price,
+                "summ" => $product->price * $validate['qty'],
+            ];            
+        }*/        
 
 
         if(session()->has('totalQty')){
-            session(['totalQty' => session()->get('totalQty') + $validate['qty']]);
+            if($validate['color'] || $validate['size']){
+                session(['totalQty' => $validate['qty']]);
+            }else{
+                session(['totalQty' => session()->get('totalQty') + $validate['qty']]);
+            }            
         }else{
             session(['totalQty' => $validate['qty']]);
         }
 
         if(session()->has('totalSumm')){
-            session(['totalSumm' => session()->get('totalSumm') + ($product->price * $validate['qty']) ]);
+            if($validate['color'] || $validate['size']){
+                session(['totalSumm' => ($product->price * $validate['qty']) ]);
+            }else{
+                session(['totalSumm' => session()->get('totalSumm') + ($product->price * $validate['qty']) ]);
+            }
         }else{
             session(['totalSumm' => $product->price * $validate['qty']]);
         }
@@ -140,6 +179,8 @@ class CartController extends Controller
                 'product_id' => $key,
                 'thumbnail' => $value['thumbnail'],
                 'title' => $value['title'],
+                'color' => $value['color'] ?? '-',
+                'size' => $value['size'] ?? '-',
                 'price' => $value['price'],
                 'qty_item' => $value['quantity'],
                 'summ_item' => $value['summ'],

@@ -32,6 +32,8 @@ class ProductController extends Controller
         }elseif(!empty($product->gallery)){
             $all_img = $product->gallery;
         }
+
+        $product->increment('view');
         
         return view('product.show', compact('product', 'products', 'comments', 'all_img'));
     }

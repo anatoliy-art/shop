@@ -35,6 +35,7 @@ class ProductRequest extends FormRequest
             'hit' => 'nullable|boolean',
             'new' => 'nullable|boolean',
             'sale' => 'nullable|boolean',
+            'stars' => 'nullable',
         ];
     }
 }

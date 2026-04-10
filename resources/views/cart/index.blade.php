@@ -30,6 +30,8 @@
                                 <th>#</th>
                                 <th>Photo</th>
                                 <th>Product</th>
+                                <th>Color</th>
+                                <th>Size</th>
                                 <th>Price</th>
                                 <th>Qty</th>
                                 <th>Summ</th>
@@ -48,8 +50,10 @@
                                 <td>
                                     <a href="{{ route('product.show', $key) }}" class="cart-content-title">{{ $product['title'] }}</a>
                                 </td>
+                                <td>{{ $product['color'] }}</td>
+                                <td>{{ $product['size'] }}</td>
                                 <td>$ {{ $product['price'] }}</td>
-                                <td>&times;{{ $product['quantity'] }}</td>
+                                <td>{{ $product['quantity'] }}</td>
                                 <td>$ {{ $product['summ'] }}</td>
                                 <td><a href="{{ route('cart.delete', $key) }}" class="btn btn-danger"><i class="fa-regular fa-circle-xmark"></i></a></td>
                             </tr>
@@ -57,11 +61,11 @@
                         </tbody>
                         <tfoot>
                             <tr class="text-center">
-                                <th colspan="6" class="text-end">Total Summ:</th>
+                                <th colspan="8" class="text-end">Total Summ:</th>
                                 <th class="text-center">$ {{ session()->get('totalSumm') }}</th>
                             </tr>
                             <tr>
-                                <th colspan="6" class="text-end">Total Qty:</th>
+                                <th colspan="8" class="text-end">Total Qty:</th>
                                 <th class="text-center">шт {{ session()->get('totalQty') }}</th>
                             </tr>
                         </tfoot>
@@ -77,7 +81,7 @@
         <div class="col-lg-4 mb-3">
 
         <div class="cart-summary p-3 sidebar">
-
+@if(session()->has('cart') && !empty(session()->get('cart')))
 <form action="{{ route('cart.order') }}" method="post">
 
   @csrf
@@ -111,7 +115,7 @@
   </div>
 
 </form>
-
+@endif
         </div>
 
     </div>
